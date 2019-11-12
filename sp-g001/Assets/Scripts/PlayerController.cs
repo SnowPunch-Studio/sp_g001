@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    enum State { MOVING, JUMPING };
+    enum State { MOVING, JUMPING, GAMEOVER };
 
     private State state_;
     private CharacterController controller;
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        this.moveSpeed = 10.0f;
+        this.moveSpeed = 12.0f;
         this.gravity = 38.0f;
         this.jumpThrust = 15.0f;
         this.verticalVelocity = 0.0f;
@@ -31,6 +31,13 @@ public class PlayerController : MonoBehaviour
 
         switch(this.state_)
         {
+            case State.GAMEOVER:
+                #if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+                #else
+                    Application.Quit();
+                #endif
+                break;
             case State.MOVING:
                 if (Input.GetKeyDown("w"))
                 {
@@ -59,11 +66,27 @@ public class PlayerController : MonoBehaviour
         switch(this.state_)
         {
             case State.MOVING:
+                if(col.gameObject.tag == "BoxObstacle")
+                {
+                    this.state_ = State.GAMEOVER;
+                }
+                if(col.gameObject.tag == "Finish")
+                {
+                    this.state_ = State.GAMEOVER;
+                }
                 break;
             case State.JUMPING:
                 if(col.gameObject.tag == "Ground")
                 {
                     this.state_ = State.MOVING;
+                }
+                if(col.gameObject.tag == "BoxObstacle")
+                {
+                    this.state_ = State.GAMEOVER;
+                }
+                if(col.gameObject.tag == "Finish")
+                {
+                    this.state_ = State.GAMEOVER;
                 }
                 break;
         }
