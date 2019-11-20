@@ -7,18 +7,23 @@ public class CameraController : MonoBehaviour
     private Vector3 startOffset;
     private Vector3 moveVector;
 
-    void Start()
+    public void InitCamera()
     {
+        Debug.Log("Initializing camera");
         lookAt = GameObject.FindGameObjectWithTag("Player").transform;
+        Debug.Log(lookAt);
         startOffset = transform.position - lookAt.position;
     }
 
     void Update()
     {
-        moveVector = lookAt.position + startOffset;
+        if(lookAt != null)
+        {
+            moveVector = lookAt.position + startOffset;
 
-        moveVector.y = Mathf.Clamp(moveVector.y, -1, 2);
+            moveVector.y = Mathf.Clamp(moveVector.y, -1, 2);
 
-        transform.position = moveVector;
+            transform.position = moveVector;
+        }
     }
 }

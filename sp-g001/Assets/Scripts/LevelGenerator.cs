@@ -12,6 +12,7 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         GenerateLevel();
+        GameObject.FindWithTag("MainCamera").GetComponent<CameraController>().InitCamera();
     }
 
     void GenerateLevel()
