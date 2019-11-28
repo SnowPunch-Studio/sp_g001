@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
         startOffset = transform.position - lookAt.position;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if(lookAt != null)
         {

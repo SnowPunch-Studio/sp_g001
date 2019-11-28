@@ -5,5 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class StageSelection : MonoBehaviour
 {
-    public static void ChangeScene(StageSelection instance, string sceneName) => SceneManager.LoadScene(sceneName);
+    public void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
