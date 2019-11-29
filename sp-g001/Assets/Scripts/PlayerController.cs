@@ -10,17 +10,17 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
 
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float horizontalMoveSpeed;
+    [SerializeField] private float forwardMoveSpeed;
     [SerializeField] private float jumpThrust;
     [SerializeField] private float gravity;
     private float verticalVelocity;
 
+    public GameObject deathParticles;
+
     void Start()
     {
-        this.moveSpeed = 12.0f;
-        this.gravity = 38.0f;
-        this.jumpThrust = 15.0f;
         this.verticalVelocity = 0.0f;
-
         this.controller = gameObject.GetComponent<CharacterController>();
         this.state_ = State.MOVING;
     }
@@ -32,11 +32,7 @@ public class PlayerController : MonoBehaviour
         switch(this.state_)
         {
             case State.GAMEOVER:
-                #if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
-                #else
-                    Application.Quit();
-                #endif
+                StartCoroutine(HandleGameOver());
                 break;
             case State.MOVING:
                 if (Input.GetKeyDown("w"))
@@ -53,9 +49,9 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        moveVector.x = Input.GetAxisRaw("Horizontal") * moveSpeed;
-        moveVector.z = moveSpeed;
-        verticalVelocity -= gravity * Time.deltaTime;
+        moveVector.x = Input.GetAxisRaw("Horizontal") * horizontalMoveSpeed;
+        moveVector.z = forwardMoveSpeed;
+        verticalVelocity -= (gravity + jumpThrust) * Time.deltaTime;
         moveVector.y = verticalVelocity;
 
         this.controller.Move(moveVector * Time.deltaTime);
@@ -68,6 +64,8 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 if(col.gameObject.tag == "BoxObstacle")
                 {
+                    Debug.Log("Calling ShowDeathSplash");
+                    ShowDeathSplash();
                     this.state_ = State.GAMEOVER;
                 }
                 if(col.gameObject.tag == "Finish")
@@ -82,6 +80,8 @@ public class PlayerController : MonoBehaviour
                 }
                 if(col.gameObject.tag == "BoxObstacle")
                 {
+                    Debug.Log("Calling ShowDeathSplash");
+                    ShowDeathSplash();
                     this.state_ = State.GAMEOVER;
                 }
                 if(col.gameObject.tag == "Finish")
@@ -90,5 +90,24 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    void ShowDeathSplash()
+    {
+        Debug.Log("Showing splash");
+        GameObject deathSplash = Instantiate(deathParticles) as GameObject;
+        deathSplash.transform.position = transform.position;
+        //this.GetComponent<MeshRenderer>().enabled = false;
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator HandleGameOver()
+    {
+        yield return new WaitForSeconds(1);
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

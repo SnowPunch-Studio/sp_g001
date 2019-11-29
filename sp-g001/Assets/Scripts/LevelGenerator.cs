@@ -37,38 +37,16 @@ public class LevelGenerator : MonoBehaviour
     void GenerateTile(int x, int z, int xPlace, int yPlace, int zPlace)
     {
         Color pixelColor = map.GetPixel(x, z);
-        Debug.Log(pixelColor);
         if (pixelColor.a == 0)
         {
-            // The pixel is transparrent. Let's ignore it!
             return;
         }
-        //Debug.Log("Pixel Color :: " + pixelColor);
+
         foreach (ColorToPrefab colorMapping in colorMappings)
         {
-            //colorMapping.color.Equals(pixelColor)
             if (colorMapping.color.r == pixelColor.r && colorMapping.color.g == pixelColor.g && colorMapping.color.b == pixelColor.b)
             {
-                //Debug.Log("Pixel Alpha :: " + pixelColor.a);
-                /*if (pixelColor.a == 1 && colorMapping.prefab != groundTile)
-                {
-                    //Debug.Log("")
-                    // Block with ground
-                    Vector3 groundPosition = new Vector3(xPlace, yPlace, zPlace);
-                    Instantiate(groundTile, groundPosition, Quaternion.identity, transform);
-                }*/
-                //Debug.Log("Mapping Color :: " + colorMapping.color);
-                //Debug.Log("Color matches");
                 Vector3 position = new Vector3(xPlace, yPlace, zPlace);
-                /*if (pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 0)
-                {
-                    position.y = -3;
-                }
-                else if (pixelColor.r == 0 && pixelColor.g == 77 && pixelColor.b == 255)
-                {
-                    position.y = 0;
-                }*/
-                //Debug.Log("Generating tile");
                 Instantiate(colorMapping.prefab, position, Quaternion.identity, transform);
                 return;
             }
