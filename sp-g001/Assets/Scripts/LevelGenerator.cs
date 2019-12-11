@@ -12,31 +12,32 @@ public class LevelGenerator : MonoBehaviour
     }
     void GenerateLevel()
     {
-        int yPlace = 0;
-        int xPlace = 0, zPlace = 0;
-        for (int x = 0; x < map.width; x++)
+        int prefabPositionX = 0;
+        int prefabPositionY = 0;
+        int prefabPositionZ = 0;
+        for (int levelMapX = 0; levelMapX < map.width; levelMapX++)
         {
-            if (xPlace == 20)
+            if (levelMapX == 20)
             {
-                xPlace = 0;
-                yPlace = 1;
+                prefabPositionX = 0;
+                prefabPositionY = 1;
             }
-            else if (xPlace == 40)
+            else if (levelMapX == 40)
             {
-                xPlace = 0;
-                yPlace = 2;
+                prefabPositionX = 0;
+                prefabPositionY = 2;
             }
-            for (int z = 0; z < map.height; z++)
+            for (int levelMapZ = 0; levelMapZ < map.height; levelMapZ++)
             {
-                zPlace = z;
-                GenerateTile(x, z, xPlace, yPlace, zPlace);
+                prefabPositionZ = levelMapZ;
+                GenerateTile(levelMapX, levelMapZ, prefabPositionX, prefabPositionY, prefabPositionZ);
             }
-            xPlace++;
+            prefabPositionX++;
         }
     }
-    void GenerateTile(int x, int z, int xPlace, int yPlace, int zPlace)
+    void GenerateTile(int levelMapX, int levelMapZ, int prefabPositionX, int prefabPositionY, int prefabPositionZ)
     {
-        Color pixelColor = map.GetPixel(x, z);
+        Color pixelColor = map.GetPixel(levelMapX, levelMapZ);
         if (pixelColor.a == 0)
         {
             return;
@@ -46,7 +47,7 @@ public class LevelGenerator : MonoBehaviour
         {
             if (colorMapping.color.r == pixelColor.r && colorMapping.color.g == pixelColor.g && colorMapping.color.b == pixelColor.b)
             {
-                Vector3 position = new Vector3(xPlace, yPlace, zPlace);
+                Vector3 position = new Vector3(prefabPositionX, prefabPositionY, prefabPositionZ);
                 Instantiate(colorMapping.prefab, position, Quaternion.identity, transform);
                 return;
             }
