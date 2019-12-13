@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,18 +9,21 @@ public class PlayerController : MonoBehaviour
 
     private State state_;
     private CharacterController controller;
+    private int coinCount;
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float horizontalMoveSpeed;
     [SerializeField] private float forwardMoveSpeed;
     [SerializeField] private float jumpThrust;
     [SerializeField] private float gravity;
+    //[SerializeField] private Text coinCounter;
     private float verticalVelocity;
 
     public GameObject deathParticles;
 
     void Start()
     {
+        this.coinCount = 0;
         this.verticalVelocity = 0.0f;
         this.controller = gameObject.GetComponent<CharacterController>();
         this.state_ = State.MOVING;
@@ -49,12 +53,16 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        moveVector.x = Input.GetAxisRaw("Horizontal") * horizontalMoveSpeed;
-        moveVector.z = forwardMoveSpeed;
-        verticalVelocity -= (gravity + jumpThrust) * Time.deltaTime;
-        moveVector.y = verticalVelocity;
+        if(this.state_ != State.GAMEOVER)
+        {
+            moveVector.x = Input.GetAxisRaw("Horizontal") * horizontalMoveSpeed;
+            moveVector.z = forwardMoveSpeed;
+            verticalVelocity -= (gravity + jumpThrust) * Time.deltaTime;
+            moveVector.y = verticalVelocity;
 
-        this.controller.Move(moveVector * Time.deltaTime);
+            this.controller.Move(moveVector * Time.deltaTime);
+            //coinCounter.text = coinCount.ToString();
+        }
     }
 
     void OnControllerColliderHit(ControllerColliderHit col)
@@ -72,6 +80,11 @@ public class PlayerController : MonoBehaviour
                 {
                     this.state_ = State.GAMEOVER;
                 }
+                if(col.gameObject.tag == "Coin")
+                {
+                    ++coinCount;
+                    Destroy(col.gameObject);
+                }
                 break;
             case State.JUMPING:
                 if(col.gameObject.tag == "Ground")
@@ -88,6 +101,11 @@ public class PlayerController : MonoBehaviour
                 {
                     this.state_ = State.GAMEOVER;
                 }
+                if (col.gameObject.tag == "Coin")
+                {
+                    ++coinCount;
+                    Destroy(col.gameObject);
+                }
                 break;
         }
     }
@@ -97,8 +115,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Showing splash");
         GameObject deathSplash = Instantiate(deathParticles) as GameObject;
         deathSplash.transform.position = transform.position;
-        //this.GetComponent<MeshRenderer>().enabled = false;
-        Destroy(this.gameObject);
+        this.GetComponent<MeshRenderer>().enabled = false;
+        //this.GetComponent<Behaviour>().enabled = false;
+        this.GetComponent<TrailRenderer>().enabled = false;
+        //Destroy(this.gameObject);
     }
 
     IEnumerator HandleGameOver()
