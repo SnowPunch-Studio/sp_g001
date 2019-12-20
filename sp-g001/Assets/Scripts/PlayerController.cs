@@ -75,7 +75,8 @@ public class PlayerController : MonoBehaviour
                 if(col.gameObject.tag == "BoxObstacle")
                 {
 					if(Shielded) {
-						Shielded = false;
+                        Destroy(col.gameObject);
+                        Shielded = false;
 					} else {
 						Debug.Log("Calling ShowDeathSplash");
 						ShowDeathSplash();
@@ -91,6 +92,23 @@ public class PlayerController : MonoBehaviour
                     ++coinCount;
                     Destroy(col.gameObject);
                 }
+                //Shield
+                if (col.gameObject.tag == "ShieldPowerup")
+                {
+                    Debug.Log("Hit the shield");
+                    Shielded = true;
+                    Destroy(col.gameObject);
+                }
+                //Speed
+                if (col.gameObject.tag == "SpeedPowerup")
+                {
+                    Destroy(col.gameObject);
+                    //moveSpeed *= 1.5f;
+                    horizontalMoveSpeed *= 1.5f;
+                    forwardMoveSpeed *= 1.5f;
+                    //jumpThrust *= 1.5f;
+                    //gravity *= 0.75f;
+                }
                 break;
             case State.JUMPING:
                 if(col.gameObject.tag == "Ground")
@@ -100,7 +118,8 @@ public class PlayerController : MonoBehaviour
                 if(col.gameObject.tag == "BoxObstacle")
                 {
 					if(Shielded) {
-						Shielded = false;
+                        Destroy(col.gameObject);
+                        Shielded = false;
 					} else {
 						Debug.Log("Calling ShowDeathSplash");
 						ShowDeathSplash();
@@ -119,16 +138,19 @@ public class PlayerController : MonoBehaviour
 				//Shield
 				if(col.gameObject.tag == "ShieldPowerup")
 				{
+                    Debug.Log("Hit the shield");
 					Shielded = true;
+                    Destroy(col.gameObject);
 				}
 				//Speed
 				if(col.gameObject.tag == "SpeedPowerup")
 				{
-					moveSpeed *= 1.5;
-					horizontalMoveSpeed *= 1.5;
-					forwardMoveSpeed *= 1.5;
-					jumpThrust *= 1.5;
-					gravity *= 0.75;
+                    Destroy(col.gameObject);
+					//moveSpeed *= 1.5f;
+					horizontalMoveSpeed *= 1.5f;
+					forwardMoveSpeed *= 1.5f;
+					jumpThrust *= 1.5f;
+					gravity *= 0.75f;
 				}
                 break;
         }

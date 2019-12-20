@@ -1,15 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 public class LevelGenerator : MonoBehaviour
 {
     public Texture2D map;
     public ColorToPrefab[] colorMappings;
     public GameObject groundTile;
-    // Use this for initialization
+
     void Start()
     {
         GenerateLevel();
         GameObject.FindWithTag("MainCamera").GetComponent<CameraController>().InitCamera();
     }
+
     void GenerateLevel()
     {
         int prefabPositionX = 0;
@@ -35,6 +37,7 @@ public class LevelGenerator : MonoBehaviour
             prefabPositionX++;
         }
     }
+
     void GenerateTile(int levelMapX, int levelMapZ, int prefabPositionX, int prefabPositionY, int prefabPositionZ)
     {
         Color pixelColor = map.GetPixel(levelMapX, levelMapZ);
@@ -42,11 +45,16 @@ public class LevelGenerator : MonoBehaviour
         {
             return;
         }
+        Debug.Log("Pixel Color :: " + pixelColor);
 
         foreach (ColorToPrefab colorMapping in colorMappings)
         {
-            if (colorMapping.color.r == pixelColor.r && colorMapping.color.g == pixelColor.g && colorMapping.color.b == pixelColor.b)
+            Debug.Log("Mapping Color :: " + colorMapping.color);
+            Debug.Log("Are equal :: " + (pixelColor == colorMapping.color));
+
+            if (Math.Round(colorMapping.color.r, 3) == Math.Round(pixelColor.r, 3) && Math.Round(colorMapping.color.g, 3) == Math.Round(pixelColor.g, 3) && Math.Round(colorMapping.color.b, 3) == Math.Round(pixelColor.b, 3))
             {
+                Debug.Log("Creating prefab for :: " + pixelColor);
                 Vector3 position = new Vector3(prefabPositionX, prefabPositionY, prefabPositionZ);
                 Instantiate(colorMapping.prefab, position, Quaternion.identity, transform);
                 return;

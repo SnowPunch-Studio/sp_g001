@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631897156ca724d2f80061257dba1e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 2800000, guid: 7bde12e6457fa4ca6b48755fd44b289a, type: 3}
+  map: {fileID: 2800000, guid: 55615d33fa3654d4fa795dc5cfb55b81, type: 3}
   colorMappings:
   - color: {r: 0, g: 0, b: 0, a: 1}
     prefab: {fileID: 983540301669707966, guid: f6bb68d14e62e4014b60b2522cd7f143, type: 3}
@@ -367,6 +367,9 @@ MonoBehaviour:
       type: 3}
   - color: {r: 1, g: 1, b: 0, a: 1}
     prefab: {fileID: 3862347574582597409, guid: 889efa7c0b8324f58939237d7e383ead,
+      type: 3}
+  - color: {r: 1, g: 0.35254171, b: 0, a: 1}
+    prefab: {fileID: 7543114023845682815, guid: 30fa47f5c67034b8e8a4c5f2ceb83fd4,
       type: 3}
   groundTile: {fileID: 983540301669707966, guid: f6bb68d14e62e4014b60b2522cd7f143,
     type: 3}
