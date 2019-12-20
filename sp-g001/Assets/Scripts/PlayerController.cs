@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     enum State { MOVING, JUMPING, GAMEOVER };
+	bool Shielded;
 
     private State state_;
     private CharacterController controller;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
         this.verticalVelocity = 0.0f;
         this.controller = gameObject.GetComponent<CharacterController>();
         this.state_ = State.MOVING;
+		Shielded = false;
     }
 
     void Update()
@@ -72,9 +74,13 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 if(col.gameObject.tag == "BoxObstacle")
                 {
-                    Debug.Log("Calling ShowDeathSplash");
-                    ShowDeathSplash();
-                    this.state_ = State.GAMEOVER;
+					if(Shielded) {
+						Shielded = false;
+					} else {
+						Debug.Log("Calling ShowDeathSplash");
+						ShowDeathSplash();
+						this.state_ = State.GAMEOVER;
+					}
                 }
                 if(col.gameObject.tag == "Finish")
                 {
@@ -93,9 +99,13 @@ public class PlayerController : MonoBehaviour
                 }
                 if(col.gameObject.tag == "BoxObstacle")
                 {
-                    Debug.Log("Calling ShowDeathSplash");
-                    ShowDeathSplash();
-                    this.state_ = State.GAMEOVER;
+					if(Shielded) {
+						Shielded = false;
+					} else {
+						Debug.Log("Calling ShowDeathSplash");
+						ShowDeathSplash();
+						this.state_ = State.GAMEOVER;
+					}
                 }
                 if(col.gameObject.tag == "Finish")
                 {
@@ -106,6 +116,20 @@ public class PlayerController : MonoBehaviour
                     ++coinCount;
                     Destroy(col.gameObject);
                 }
+				//Shield
+				if(col.gameObject.tag == "ShieldPowerup")
+				{
+					Shielded = true;
+				}
+				//Speed
+				if(col.gameObject.tag == "SpeedPowerup")
+				{
+					moveSpeed *= 1.5;
+					horizontalMoveSpeed *= 1.5;
+					forwardMoveSpeed *= 1.5;
+					jumpThrust *= 1.5;
+					gravity *= 0.75;
+				}
                 break;
         }
     }
