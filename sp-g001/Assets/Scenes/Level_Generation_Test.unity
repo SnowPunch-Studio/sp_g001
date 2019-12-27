@@ -371,8 +371,12 @@ MonoBehaviour:
   - color: {r: 1, g: 0.3529412, b: 0, a: 1}
     prefab: {fileID: 7543114023845682815, guid: 30fa47f5c67034b8e8a4c5f2ceb83fd4,
       type: 3}
+  - color: {r: 0, g: 1, b: 1, a: 1}
+    prefab: {fileID: 1462501809791392025, guid: d879a80889a6b4142ab4338419155a41,
+      type: 3}
   groundTile: {fileID: 983540301669707966, guid: f6bb68d14e62e4014b60b2522cd7f143,
     type: 3}
+  isEnabled: 1
 --- !u!4 &453373174
 Transform:
   m_ObjectHideFlags: 0
@@ -489,9 +493,10 @@ GameObject:
   - component: {fileID: 1514404687}
   - component: {fileID: 1514404686}
   - component: {fileID: 1514404685}
+  - component: {fileID: 1514404688}
   m_Layer: 0
   m_Name: EventSystem
-  m_TagString: Untagged
+  m_TagString: EventSystem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -544,6 +549,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1514404688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514404684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca82ea32de7734c4592b74b7fe672702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listeners: []
 --- !u!1 &1867662340
 GameObject:
   m_ObjectHideFlags: 0

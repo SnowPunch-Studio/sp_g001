@@ -5,11 +5,16 @@ public class LevelGenerator : MonoBehaviour
     public Texture2D map;
     public ColorToPrefab[] colorMappings;
     public GameObject groundTile;
+    public Boolean isEnabled = true;
 
     void Start()
     {
-        GenerateLevel();
-        GameObject.FindWithTag("MainCamera").GetComponent<CameraController>().InitCamera();
+        if(isEnabled)
+        {
+            GenerateLevel();
+            GameObject.FindWithTag("MainCamera").GetComponent<CameraController>().InitCamera();
+            GameObject.FindWithTag("EventSystem").GetComponent<EventSystemListeners>().Initialize();
+        }
     }
 
     void GenerateLevel()
@@ -54,7 +59,7 @@ public class LevelGenerator : MonoBehaviour
 
             if (Math.Round(colorMapping.color.r, 3) == Math.Round(pixelColor.r, 3) && Math.Round(colorMapping.color.g, 3) == Math.Round(pixelColor.g, 3) && Math.Round(colorMapping.color.b, 3) == Math.Round(pixelColor.b, 3))
             {
-                Debug.Log("Creating prefab for :: " + pixelColor);
+                //Debug.Log("Creating prefab for :: " + pixelColor);
                 Vector3 position = new Vector3(prefabPositionX, prefabPositionY, prefabPositionZ);
                 Instantiate(colorMapping.prefab, position, Quaternion.identity, transform);
                 return;

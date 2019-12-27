@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    enum State { MOVING, JUMPING, GAMEOVER };
-	bool Shielded;
+    public enum State { MOVING, JUMPING, GAMEOVER };
+    public enum PowerUpState { NONE, INVINCIBLE };
+    public bool Shielded;
 
     private State state_;
+    private PowerUpState powerUpState; 
     private CharacterController controller;
     private int coinCount;
 
@@ -17,7 +20,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float forwardMoveSpeed;
     [SerializeField] private float jumpThrust;
     [SerializeField] private float gravity;
-    //[SerializeField] private Text coinCounter;
     private float verticalVelocity;
 
     public GameObject deathParticles;
@@ -69,91 +71,140 @@ public class PlayerController : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit col)
     {
-        switch(this.state_)
+        if (powerUpState == PowerUpState.INVINCIBLE)
         {
-            case State.MOVING:
-                if(col.gameObject.tag == "BoxObstacle")
-                {
-					if(Shielded) {
-                        Destroy(col.gameObject);
-                        Shielded = false;
-					} else {
-						Debug.Log("Calling ShowDeathSplash");
-						ShowDeathSplash();
-						this.state_ = State.GAMEOVER;
-					}
-                }
-                if(col.gameObject.tag == "Finish")
-                {
-                    this.state_ = State.GAMEOVER;
-                }
-                if(col.gameObject.tag == "Coin")
-                {
-                    ++coinCount;
-                    Destroy(col.gameObject);
-                }
-                //Shield
-                if (col.gameObject.tag == "ShieldPowerup")
-                {
-                    Debug.Log("Hit the shield");
-                    Shielded = true;
-                    Destroy(col.gameObject);
-                }
-                //Speed
-                if (col.gameObject.tag == "SpeedPowerup")
-                {
-                    Destroy(col.gameObject);
-                    //moveSpeed *= 1.5f;
-                    horizontalMoveSpeed *= 1.5f;
-                    forwardMoveSpeed *= 1.5f;
-                    //jumpThrust *= 1.5f;
-                    //gravity *= 0.75f;
-                }
-                break;
-            case State.JUMPING:
-                if(col.gameObject.tag == "Ground")
-                {
-                    this.state_ = State.MOVING;
-                }
-                if(col.gameObject.tag == "BoxObstacle")
-                {
-					if(Shielded) {
-                        Destroy(col.gameObject);
-                        Shielded = false;
-					} else {
-						Debug.Log("Calling ShowDeathSplash");
-						ShowDeathSplash();
-						this.state_ = State.GAMEOVER;
-					}
-                }
-                if(col.gameObject.tag == "Finish")
-                {
-                    this.state_ = State.GAMEOVER;
-                }
-                if (col.gameObject.tag == "Coin")
-                {
-                    ++coinCount;
-                    Destroy(col.gameObject);
-                }
-				//Shield
-				if(col.gameObject.tag == "ShieldPowerup")
-				{
-                    Debug.Log("Hit the shield");
-					Shielded = true;
-                    Destroy(col.gameObject);
-				}
-				//Speed
-				if(col.gameObject.tag == "SpeedPowerup")
-				{
-                    Destroy(col.gameObject);
-					//moveSpeed *= 1.5f;
-					horizontalMoveSpeed *= 1.5f;
-					forwardMoveSpeed *= 1.5f;
-					jumpThrust *= 1.5f;
-					gravity *= 0.75f;
-				}
-                break;
+            if (col.gameObject.tag == "Finish")
+            {
+                this.state_ = State.GAMEOVER;
+            }
+            if (col.gameObject.tag == "Coin")
+            {
+                ++coinCount;
+                Destroy(col.gameObject);
+            }
+            if(col.gameObject.tag != "Ground")
+            {
+                Debug.Log("Collided while invincible. Sending message");
+                SendCollisionMessages(col);
+            }
         }
+        else
+        {
+            switch (this.state_)
+            {
+                case State.MOVING:
+                    if (col.gameObject.tag == "BoxObstacle")
+                    {
+                        if (Shielded)
+                        {
+                            Destroy(col.gameObject);
+                            Shielded = false;
+                        }
+                        else
+                        {
+                            Debug.Log("Calling ShowDeathSplash");
+                            ShowDeathSplash();
+                            this.state_ = State.GAMEOVER;
+                        }
+                    }
+                    if (col.gameObject.tag == "Finish")
+                    {
+                        this.state_ = State.GAMEOVER;
+                    }
+                    if (col.gameObject.tag == "Coin")
+                    {
+                        ++coinCount;
+                        Destroy(col.gameObject);
+                    }
+                    //Shield
+                    /*if (col.gameObject.tag == "ShieldPowerup")
+                    {
+                        Debug.Log("Hit the shield");
+                        Shielded = true;
+                        Destroy(col.gameObject);
+                    }
+                    //Speed
+                    if (col.gameObject.tag == "SpeedPowerup")
+                    {
+                        Destroy(col.gameObject);
+                        //moveSpeed *= 1.5f;
+                        horizontalMoveSpeed *= 1.5f;
+                        forwardMoveSpeed *= 1.5f;
+                        //jumpThrust *= 1.5f;
+                        //gravity *= 0.75f;
+                    }*/
+                    break;
+                case State.JUMPING:
+                    if (col.gameObject.tag == "Ground")
+                    {
+                        this.state_ = State.MOVING;
+                    }
+                    if (col.gameObject.tag == "BoxObstacle")
+                    {
+                        if (Shielded)
+                        {
+                            Destroy(col.gameObject);
+                            Shielded = false;
+                        }
+                        else
+                        {
+                            Debug.Log("Calling ShowDeathSplash");
+                            ShowDeathSplash();
+                            this.state_ = State.GAMEOVER;
+                        }
+                    }
+                    if (col.gameObject.tag == "Finish")
+                    {
+                        this.state_ = State.GAMEOVER;
+                    }
+                    if (col.gameObject.tag == "Coin")
+                    {
+                        ++coinCount;
+                        Destroy(col.gameObject);
+                    }
+                    //Shield
+                    /*if(col.gameObject.tag == "ShieldPowerup")
+                    {
+                        Debug.Log("Hit the shield");
+                        Shielded = true;
+                        Destroy(col.gameObject);
+                    }
+                    //Speed
+                    if(col.gameObject.tag == "SpeedPowerup")
+                    {
+                        Destroy(col.gameObject);
+                        //moveSpeed *= 1.5f;
+                        horizontalMoveSpeed *= 1.5f;
+                        forwardMoveSpeed *= 1.5f;
+                        jumpThrust *= 1.5f;
+                        gravity *= 0.75f;
+                    }*/
+                    break;
+            }
+        }
+    }
+
+    public void SendCollisionMessages(ControllerColliderHit col)
+    {
+        foreach(GameObject go in EventSystemListeners.main.listeners)
+        {
+            ExecuteEvents.Execute<IPlayerEvents>(go, null, (x, y) => x.OnPlayerCollide(col));
+        }
+    }
+
+    public void SetState(State newState)
+    {
+        this.state_ = newState;
+    }
+
+    public void SetPowerUpState(PowerUpState newState)
+    {
+        this.powerUpState = newState;
+    }
+
+    public void BoostMoveSpeed(float multiplier)
+    {
+        this.forwardMoveSpeed *= multiplier;
     }
 
     void ShowDeathSplash()
@@ -162,9 +213,7 @@ public class PlayerController : MonoBehaviour
         GameObject deathSplash = Instantiate(deathParticles) as GameObject;
         deathSplash.transform.position = transform.position;
         this.GetComponent<MeshRenderer>().enabled = false;
-        //this.GetComponent<Behaviour>().enabled = false;
         this.GetComponent<TrailRenderer>().enabled = false;
-        //Destroy(this.gameObject);
     }
 
     IEnumerator HandleGameOver()

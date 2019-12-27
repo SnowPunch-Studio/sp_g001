@@ -1,11 +1,28 @@
-fileFormatVersion: 2
-guid: 9876657042c2e72428349892be8ff3bb
-MonoImporter:
-  externalObjects: {}
-  serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class PowerUp : MonoBehaviour
+{
+    public string powerUpName;
+    public string powerUpExplanation;
+    public string powerUpQuote;
+    [Tooltip ("Tick true for power ups that are instant use, eg a health addition that has no delay before expiring")]
+    public bool expiresImmediately;
+    public GameObject specialEffect;
+    public AudioClip soudEffect;
+    
+    protected PlayerController playerController;
+    
+    protected SpriteRenderer spriteRenderer;
+    
+    protected enum PowerUpState 
+    {
+        InAttractMode,
+        IsCollected,
+        IsExpiring
+    }
+    
+    protected PowerUpState powerUpState;
+    
+    
+}
