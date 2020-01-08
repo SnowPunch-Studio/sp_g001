@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 9069670670013588299}
   - component: {fileID: 9106425043250215288}
   - component: {fileID: 2801942855220221314}
-  - component: {fileID: 188582293735529042}
   - component: {fileID: -2395209354688449982}
+  - component: {fileID: -2168873463056789119}
   m_Layer: 0
   m_Name: ShieldPowerup
   m_TagString: Listener
@@ -107,24 +107,6 @@ Halo:
     serializedVersion: 2
     rgba: 4294967295
   m_Size: 0.8
---- !u!114 &188582293735529042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ad019da93794c94bcc681691d047ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUpName: Shield
-  powerUpExplanation: Allows the user to take one hit and continue playing
-  powerUpQuote: 
-  expiresImmediately: 0
-  specialEffect: {fileID: 0}
-  soundEffect: {fileID: 0}
 --- !u!114 &-2395209354688449982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,3 +120,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yOffset: 0.5
+--- !u!114 &-2168873463056789119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543114023845682815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f196c7f9f434ec4af8f9726babf970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpName: Magnet
+  powerUpExplanation: 
+  powerUpQuote: 
+  expiresImmediately: 0
+  specialEffect: {fileID: 0}
+  soundEffect: {fileID: 0}
