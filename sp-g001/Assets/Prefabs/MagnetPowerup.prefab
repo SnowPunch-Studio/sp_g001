@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7543114023845682815
+--- !u!1 &76986561945583333
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,27 +8,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 438723915858257429}
-  - component: {fileID: 3112200238919616415}
-  - component: {fileID: 9069670670013588299}
-  - component: {fileID: 9106425043250215288}
-  - component: {fileID: 2801942855220221314}
-  - component: {fileID: -2395209354688449982}
-  - component: {fileID: -6173515563229392981}
+  - component: {fileID: 8046153456141682319}
+  - component: {fileID: 4796269021204375301}
+  - component: {fileID: 1469006394103956433}
+  - component: {fileID: 1720236208376650210}
+  - component: {fileID: 5718873121607398680}
+  - component: {fileID: 3998498467490190040}
+  - component: {fileID: 1629142504213951988}
   m_Layer: 0
-  m_Name: ShieldPowerup
+  m_Name: MagnetPowerup
   m_TagString: Listener
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &438723915858257429
+--- !u!4 &8046153456141682319
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
+  m_GameObject: {fileID: 76986561945583333}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.59, z: -0.08}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
@@ -36,21 +36,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3112200238919616415
+--- !u!33 &4796269021204375301
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
+  m_GameObject: {fileID: 76986561945583333}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &9069670670013588299
+--- !u!23 &1469006394103956433
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
+  m_GameObject: {fileID: 76986561945583333}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -82,57 +82,57 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &9106425043250215288
+--- !u!135 &1720236208376650210
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
+  m_GameObject: {fileID: 76986561945583333}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!122 &2801942855220221314
+--- !u!122 &5718873121607398680
 Halo:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
+  m_GameObject: {fileID: 76986561945583333}
   m_Enabled: 1
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190335
   m_Size: 0.8
---- !u!114 &-2395209354688449982
+--- !u!114 &3998498467490190040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
+  m_GameObject: {fileID: 76986561945583333}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2ba84dca861b418f882639b20fa8a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   yOffset: 0.5
---- !u!114 &-6173515563229392981
+--- !u!114 &1629142504213951988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7543114023845682815}
+  m_GameObject: {fileID: 76986561945583333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ad019da93794c94bcc681691d047ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 47f196c7f9f434ec4af8f9726babf970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpName: 
+  powerUpName: Magnet
   powerUpExplanation: 
   powerUpQuote: 
   expiresImmediately: 0

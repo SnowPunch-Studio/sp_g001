@@ -50,12 +50,12 @@ public class LevelGenerator : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Pixel Color :: " + pixelColor);
+        //Debug.Log("Pixel Color :: " + pixelColor);
 
         foreach (ColorToPrefab colorMapping in colorMappings)
         {
-            Debug.Log("Mapping Color :: " + colorMapping.color);
-            Debug.Log("Are equal :: " + (pixelColor == colorMapping.color));
+            //Debug.Log("Mapping Color :: " + colorMapping.color);
+            //Debug.Log("Are equal :: " + (pixelColor == colorMapping.color));
 
             if (Math.Round(colorMapping.color.r, 3) == Math.Round(pixelColor.r, 3) && Math.Round(colorMapping.color.g, 3) == Math.Round(pixelColor.g, 3) && Math.Round(colorMapping.color.b, 3) == Math.Round(pixelColor.b, 3))
             {

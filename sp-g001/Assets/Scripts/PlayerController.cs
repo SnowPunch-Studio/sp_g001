@@ -69,6 +69,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Coin")
+        {
+            ++coinCount;
+            Destroy(col.gameObject);
+        }
+    }
+
     void OnControllerColliderHit(ControllerColliderHit col)
     {
         if (powerUpState == PowerUpState.INVINCIBLE)

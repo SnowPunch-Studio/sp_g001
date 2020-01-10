@@ -6,7 +6,7 @@ public class PowerUpMagnet : PowerUp
 {
     bool isActive;
     HashSet<GameObject> foundGameObjects = new HashSet<GameObject>();
-    float speed = 2f;
+    float speed = 15f;
     bool m_Started;
     Vector3 sphereCenter;
     float sphereRadius;
@@ -27,33 +27,16 @@ public class PowerUpMagnet : PowerUp
 
     private void Update()
     {
-        if(isActive)
+        if(isActive && playerController != null)
         {
-            Debug.Log("Is Active");
-            //sphereCenter = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z + 2);
-            //sphereRadius = 3f;
-
             Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, sphereRadius);
             foreach(Collider col in hitColliders)
             {
                 if(col.gameObject.tag == "Coin")
                 {
-                    Debug.Log("Found Coin");
-                    if (foundGameObjects.Add(col.gameObject))
-                    {
-                        Debug.Log("Coin is new");
-                        float step = speed * Time.deltaTime;
-                        col.gameObject.transform.position = Vector3.MoveTowards(col.gameObject.transform.position, playerController.gameObject.transform.position, step);
-                    }
-
-                    if(col.gameObject.transform.position == playerController.gameObject.transform.position)
-                    {
-                        Debug.Log("Coin made it to player");
-                        // Increment player coin count
-                        Destroy(col.gameObject);
-                    }
-
-                    Debug.Log("HashSet :: " + foundGameObjects);
+                    float step = speed * Time.deltaTime;
+                    Vector3 target = new Vector3(playerController.gameObject.transform.position.x, playerController.gameObject.transform.position.y, playerController.gameObject.transform.position.z + 3);
+                    col.gameObject.transform.position = Vector3.MoveTowards(col.gameObject.transform.position, playerController.gameObject.transform.position, step);
                 }
             }
         }
@@ -74,11 +57,13 @@ public class PowerUpMagnet : PowerUp
 
     void OnDrawGizmos()
     {
-        sphereCenter = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z + 2);
-        sphereRadius = 3f;
-
-        Gizmos.color = Color.cyan;
         if (m_Started && playerController != null)
+        {
+            sphereCenter = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z + 2);
+            sphereRadius = 3f;
+
+            Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(sphereCenter, sphereRadius);
+        }
     }
 }
